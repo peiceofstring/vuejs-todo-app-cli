@@ -1,0 +1,54 @@
+$darkBlue: #2f495e;
+$plainGreen: #00c58e;
+$darkGreen: #008f65;
+$lightGrey: #e3e8f0;
+$plainGrey: #e3e8f0;
+$charcoal: #2b2b2b;
+$error: crimson;
+
+/* Background Colors */
+@mixin bgDarkBlue {
+  background-color: $darkBlue;
+}
+@mixin bgGreen {
+  background-color: $plainGreen;
+}
+@mixin bgDarkGreen {
+  background-color: $darkGreen;
+}
+@mixin bgGrey {
+  background-color: $plainGrey;
+}
+@mixin bgLightGrey {
+  background-color: $lightGrey;
+}
+@mixin bgCharcoal {
+  background-color: $charcoal;
+}
+@mixin bgError {
+  background-color: $error;
+}
+
+/* Text Colors */
+
+@mixin textDarkBlue {
+  color: $darkBlue;
+}
+@mixin textGreen {
+  color: $plainGreen;
+}
+@mixin textDarkGreen {
+  color: $darkGreen;
+}
+@mixin textLightGrey {
+  color: $lightGrey;
+}
+@mixin textGrey {
+  color: $plainGrey;
+}
+@mixin textCharcoal {
+  color: $charcoal;
+}
+@mixin textError {
+  color: $error;
+}

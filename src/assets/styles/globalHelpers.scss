@@ -1,0 +1,35 @@
+@mixin textLeft {
+  text-align: left;
+}
+@mixin flexContainer {
+  display: flex;
+}
+
+@mixin flexSmall {
+  flex-grow: 1;
+}
+
+@mixin flexBig {
+  flex-grow: 10;
+}
+@mixin resetStyle {
+  padding: 0;
+  margin: 0;
+  outline: 0;
+  border: none;
+}
+@mixin titleFont {
+  font-size: 32px;
+}
+@mixin rightCurvedRadius {
+  border-radius: 0px 5px 5px 0px;
+}
+
+@mixin leftCurvedRadius {
+  border-radius: 5px 0px 0px 5px;
+}
+@mixin listStyleReset {
+  list-style: none;
+  list-style-type: none;
+  text-decoration: none;
+}
