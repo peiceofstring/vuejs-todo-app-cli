@@ -1,21 +1,51 @@
 <template lang="html">
   <div class="listHeader">
-    <div class="titleContainer" @click="toggleMainShown()">
+    <div class="titleContainer">
       <!-- Normal State-->
       <div v-show="!isMainShown" class="">
         <h1 class="titleStyle">
-          <i class="fa fa-list listIconStyle "> </i>
-          My To Do List
+          <span>
+            <i
+              @click="
+                toggleMainShown();
+                copyListTitle();
+              "
+              class="fa fa-list listIconStyle "
+            >
+            </i
+          ></span>
+
+          {{ listTitle }}
         </h1>
       </div>
       <!-- Edit State -->
 
       <div v-show="isMainShown" class="mainEditState">
-        <input class="mainEditStateInput" type="text" name="" value="" />
-        <button class="mainEditStateCloseButton" type="button" name="button">
+        <input
+          class="mainEditStateInput"
+          v-on:keyup.enter="toggleMainShown()"
+          v-model="listTitle"
+          type="text"
+          name=""
+          value=""
+        />
+        <button
+          @click="
+            revertTitleText();
+            toggleMainShown();
+          "
+          class="mainEditStateCloseButton"
+          type="button"
+          name="button"
+        >
           <i class="fa fa-close faSize "></i>
         </button>
-        <button class="mainEditStateCheckButton" type="button" name="button">
+        <button
+          @click="toggleMainShown()"
+          class="mainEditStateCheckButton"
+          type="button"
+          name="button"
+        >
           <i class="fa fa-check faSize "></i>
         </button>
       </div>
@@ -23,13 +53,20 @@
     <!-- Input Container -->
     <div class="mainInputContainer">
       <input
+        :value="textInput"
+        @input="updateTextInput"
+        v-on:keyup.enter="addListItem()"
         class="mainInputStyle"
         placeholder="New Item..."
         type="text"
         name=""
-        value=""
       />
-      <button class="mainInputButtonStyle" type="button" name="button">
+      <button
+        @click="addListItem()"
+        class="mainInputButtonStyle"
+        type="button"
+        name="button"
+      >
         ADD
       </button>
     </div>
@@ -41,12 +78,41 @@ export default {
   name: "ListHeader",
   data() {
     return {
-      isMainShown: false
+      listTitle: "My ToDo List",
+      isMainShown: false,
+      tempListTitle: ""
     };
   },
+  computed: {
+    textInput() {
+      return this.$store.state.textInput;
+    }
+
+    /* textInput: {
+      get_textInput() {
+        return this.$store.state.textInput;
+      },
+      set_textInput(value) {
+        return this.$store.commit("updateTextInput", value);
+      }
+    } */
+  },
   methods: {
-    toggleMainShown: function() {
+    copyListTitle() {
+      this.tempListTitle = this.listTitle;
+    },
+    revertTitleText() {
+      this.listTitle = this.tempListTitle;
+      this.tempListTitle = "";
+    },
+    toggleMainShown() {
       this.isMainShown = !this.isMainShown;
+    },
+    addListItem() {
+      this.$store.commit("addListItem");
+    },
+    updateTextInput(el) {
+      this.$store.commit("updateTextInput", el.target.value);
     }
   }
 };
@@ -84,6 +150,7 @@ export default {
   @include flexBig;
   @include leftCurvedRadius;
   font-size: 25px;
+  font-weight: bold;
 }
 
 @mixin mainEditButtonStyles {
@@ -119,7 +186,7 @@ export default {
   @include resetStyle;
   @include inputHeight;
   @include rightCurvedRadius;
-  padding: 0 15px;
+  padding: 0 14px;
 }
 .mainInputButtonStyle {
   @include mainInputMixin;

@@ -1,8 +1,17 @@
 <template lang="html">
   <div class="listContainer">
     <ul class="listItemUl">
-      <ListItem list-item-text=" First Item "> </ListItem>
-      <ListItem list-item-text="Second Item" />
+      <ListItem
+        v-for="(items, index) in this.$store.state.listItemArray"
+        :key="items"
+        :id="items.id"
+        :listItemText="items.listItemText"
+        :isChecked="items.isChecked"
+        :isEditState="items.isEditState"
+        :tempListItemText="items.tempListItemText"
+        :index="index"
+      >
+      </ListItem>
     </ul>
   </div>
 </template>
@@ -15,9 +24,7 @@ export default {
     ListItem
   },
   data() {
-    return {
-      listItemText: "hello"
-    };
+    return {};
   }
 };
 </script>

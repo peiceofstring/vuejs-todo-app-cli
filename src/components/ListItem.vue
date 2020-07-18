@@ -1,21 +1,44 @@
 <template lang="html">
   <div class="listContainer">
-    <li class="listItemStyle" @click="toggleShown()">
+    <li class="listItemStyle">
       <!-- Normal State -->
-      <div v-show="!isShown" class="normalState">
+      <div v-show="!isEditState" class="normalState">
         <i
+          @click="toggleCheck()"
           :class="[this.isChecked ? 'fa-square-o' : 'fa-check-square-o']"
           class="fa faSize checkMarkStyle"
         ></i>
         <span class="listItemTextStyle"> {{ listItemText }}</span>
-        <i class="fa fa-edit faSize editMarkStyle"></i>
-        <i class="fa fa-times-rectangle faSize closeMarkStyle"></i>
+        <i
+          @click="
+            toggleEditState();
+            updateTempText(index);
+          "
+          class="fa fa-edit faSize editMarkStyle"
+        ></i>
+        <i
+          @click="removeItem(index)"
+          class="fa fa-times-rectangle faSize closeMarkStyle"
+        ></i>
       </div>
       <!-- Edit State -->
-      <div v-show="isShown" class="editState">
-        <input class="editStateInput" type="text" name="" value="" />
-        <i class="fa fa-close faSize editStateCloseButton"></i>
-        <i class="fa fa-check faSize editStateCheckButton"></i>
+      <div v-show="isEditState" class="editState">
+        <input
+          v-model="listItemText"
+          v-on:keyup.enter="toggleEditState()"
+          class="editStateInput"
+          type="text"
+          name=""
+          value=""
+        />
+        <i
+          @click="revertItemText(index)"
+          class="fa fa-close faSize editStateCloseButton"
+        ></i>
+        <i
+          @click="toggleEditState()"
+          class="fa fa-check faSize editStateCheckButton"
+        ></i>
       </div>
     </li>
   </div>
@@ -24,16 +47,32 @@
 <script>
 export default {
   name: "ListItem",
-  props: ["listItemText"],
+  props: [
+    "id",
+    "listItemText",
+    "isEditState",
+    "isChecked",
+    "index",
+    "tempListItemText"
+  ],
   data() {
-    return {
-      isShown: false,
-      isChecked: false
-    };
+    return {};
   },
   methods: {
-    toggleShown: function() {
-      this.isShown = !this.isShown;
+    toggleEditState() {
+      this.isEditState = !this.isEditState;
+    },
+    toggleCheck() {
+      this.isChecked = !this.isChecked;
+    },
+    removeItem(index) {
+      this.$store.commit("removeItem", index);
+    },
+    updateTempText(index) {
+      this.$store.commit("updateTempText", index);
+    },
+    revertItemText(index) {
+      this.$store.commit("revertItemText", index);
     }
   }
 };
@@ -49,6 +88,7 @@ export default {
   @include listStyleReset;
   @include textLeft;
   padding: 20px 0px;
+  word-wrap: break-word;
 }
 
 .listItemStyle {
@@ -56,7 +96,6 @@ export default {
   @include bgGrey;
   padding: 10px 20px;
   border: 1px solid black;
-  height: 30px;
 }
 .listItemTextStyle {
   margin-top: 3px;
