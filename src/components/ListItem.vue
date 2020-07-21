@@ -30,6 +30,15 @@
           type="text"
           name=""
         />
+        <!--  
+        Shift Up Shift DOwn
+        <i @click="shiftUp(index)" class="fa fa-caret-square-o-up faSize"></i>
+        <i
+          @click="shiftDown(index)"
+          class="fa fa-caret-square-o-down faSize"
+        ></i>
+      -->
+
         <i
           @click="
             revertItemText();
@@ -80,10 +89,16 @@ export default {
       this.$store.commit("removeItem", index);
     },
     setOriginalText() {
-      this.originalTextItem = this.listItemText;
+      this.originalListItemText = this.listItemText;
     },
     revertItemText() {
-      this.listItemText = this.originalTextItem;
+      this.listItemText = this.originalListItemText;
+    },
+    shiftUp(index) {
+      this.$store.commit("shiftUp", index);
+    },
+    shiftDown(index) {
+      this.$store.commit("shiftDown", index);
     }
   }
 };

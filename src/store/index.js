@@ -52,6 +52,15 @@ export default new Vuex.Store({
       });
       state.textInput = "";
     },
+    // List
+    shiftUp(state, index) {
+      console.log(index + 1);
+      state.listItemArray.copyWithin(index, index + 1);
+    },
+    shiftDown(state, index) {
+      console.log(index - 1);
+      state.listItemArray.copyWithin(index, index - 1);
+    },
 
     removeItem(state, index) {
       console.log(index);
