@@ -30,10 +30,7 @@
           value=""
         />
         <button
-          @click="
-            revertTitleText();
-            toggleMainShown();
-          "
+          @click="revertTitleText()"
           class="mainEditStateCloseButton"
           type="button"
           name="button"
@@ -87,15 +84,6 @@ export default {
     textInput() {
       return this.$store.state.textInput;
     }
-
-    /* textInput: {
-      get_textInput() {
-        return this.$store.state.textInput;
-      },
-      set_textInput(value) {
-        return this.$store.commit("updateTextInput", value);
-      }
-    } */
   },
   methods: {
     copyListTitle() {
@@ -103,7 +91,6 @@ export default {
     },
     revertTitleText() {
       this.listTitle = this.tempListTitle;
-      this.tempListTitle = "";
     },
     toggleMainShown() {
       this.isMainShown = !this.isMainShown;

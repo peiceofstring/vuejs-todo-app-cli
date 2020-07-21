@@ -8,6 +8,7 @@ export default new Vuex.Store({
   state: {
     startingId: 3,
     textInput: "",
+    originalText: "",
     listItemArray: [
       {
         id: 0,
@@ -15,7 +16,7 @@ export default new Vuex.Store({
         isChecked: false,
         isEditState: false,
         index: "",
-        tempListItemText: ""
+        originalListItemText: ""
       },
       {
         id: 1,
@@ -23,7 +24,7 @@ export default new Vuex.Store({
         isChecked: false,
         isEditState: false,
         index: "",
-        tempListItemText: ""
+        originalListItemText: ""
       },
       {
         id: 2,
@@ -31,11 +32,12 @@ export default new Vuex.Store({
         isChecked: false,
         isEditState: false,
         index: "",
-        tempListItemText: ""
+        originalListItemText: ""
       }
     ]
   },
   mutations: {
+    // Header
     updateTextInput(state, textInput) {
       state.textInput = textInput;
     },
@@ -50,18 +52,10 @@ export default new Vuex.Store({
       });
       state.textInput = "";
     },
+
     removeItem(state, index) {
       console.log(index);
       state.listItemArray.splice(index, 1);
-    },
-    updateTempText(state, index) {
-      state.listItemArray[index].tempListItemText =
-        state.listItemArray[index].listItemText;
-    },
-    revertItemText(state, index) {
-      state.listItemArray[index].listItemText =
-        state.listItemArray[index].tempListItemText;
-      state.listItemArray[index].tempListItemText = "";
     }
   },
   actions: {},

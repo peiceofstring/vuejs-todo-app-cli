@@ -12,7 +12,7 @@
         <i
           @click="
             toggleEditState();
-            updateTempText(index);
+            setOriginalText();
           "
           class="fa fa-edit faSize editMarkStyle"
         ></i>
@@ -29,14 +29,19 @@
           class="editStateInput"
           type="text"
           name=""
-          value=""
         />
         <i
-          @click="revertItemText(index)"
+          @click="
+            revertItemText();
+            toggleEditState();
+          "
           class="fa fa-close faSize editStateCloseButton"
         ></i>
         <i
-          @click="toggleEditState()"
+          @click="
+            setOriginalText();
+            toggleEditState();
+          "
           class="fa fa-check faSize editStateCheckButton"
         ></i>
       </div>
@@ -53,26 +58,32 @@ export default {
     "isEditState",
     "isChecked",
     "index",
-    "tempListItemText"
+    "originalListItemText"
   ],
   data() {
-    return {};
+    return {
+      originalText: ""
+    };
   },
+  computed: {},
   methods: {
     toggleEditState() {
+      console.log("toggleEditState");
       this.isEditState = !this.isEditState;
     },
     toggleCheck() {
+      console.log("toggleCheckMark");
       this.isChecked = !this.isChecked;
     },
     removeItem(index) {
+      console.log("removeItem");
       this.$store.commit("removeItem", index);
     },
-    updateTempText(index) {
-      this.$store.commit("updateTempText", index);
+    setOriginalText() {
+      this.originalTextItem = this.listItemText;
     },
-    revertItemText(index) {
-      this.$store.commit("revertItemText", index);
+    revertItemText() {
+      this.listItemText = this.originalTextItem;
     }
   }
 };
